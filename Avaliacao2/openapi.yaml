@@ -1,0 +1,123 @@
+openapi: 3.0.1
+info:
+  title: API avaliacion 3
+  description: API de la prueba de compasso
+  version: 0.0.1
+  termsOfService: https://mockapi.io
+  contact:
+    name: Suporte ao Dev
+    email: mariana_villagr_bols@compasso.com.br
+    url: https://mockapi.io
+  license:
+    name: 'Lincença: GPLv3'
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+externalDocs:
+  description: Documentação burocrática
+  url: https://mockapi.io
+servers:
+  - url: https://localhost:8080/api/states
+    description: Avaliacion
+paths:
+  /estados:
+    get:
+      summary: Exhibe todos los estados creados
+      parameters:
+        - in: path
+          name: Region
+          schema:
+            type: string
+          required: false
+          description: Exhibe los estados de la region escogida
+        - in: path
+          name: Populacion
+          schema:
+            type: integer
+          required: false
+          description: Organizar los estados por populacion
+        - in: path
+          name: Area
+          schema:
+            type: integer
+          required: false
+          description: Organizar los estados por area
+      responses:
+        '200':
+          description: exito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/States'
+    post:
+      summary: Crear nuevo estado
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/States'
+      responses:
+        '201':
+          description: Exito!
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/States'
+  /estados/{id}:
+    parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
+    get:
+      summary: Estado por ID
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/States'
+        '404':
+          description: ERROR Estado no encontrado
+          content:
+            application/json:
+              example: Not Found
+    put:
+      summary: Actualizar un estado
+      description: Atualizar un estado por ID
+      operationId: id
+      responses:
+        default:
+          description: Exito!
+          
+    delete:
+      summary: Eliminar un estado
+      description: Atualizar uun estado por ID
+      operationId: ''
+      responses:
+        default:
+          description: Exito!
+security:
+  - auth: []
+components:
+  schemas:
+    Estados:
+      type: object
+      properties:
+        id:
+          type: integer
+        Nombre:
+          type: string
+        Region:
+          type: string
+        Populacion:
+          type: integer
+        area:
+          type: integer
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
